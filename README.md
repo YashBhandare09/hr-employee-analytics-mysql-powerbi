@@ -1,6 +1,11 @@
 # hr-employee-analytics-mysql-powerbi
 HR Employee Data Analysis and Visualization using MySQL &amp; Power BI
 
+
+<img width="1601" height="903" alt="Screenshot (175)" src="https://github.com/user-attachments/assets/4a317228-47b4-4421-87a4-27fb2cca31a8" />
+
+
+
 ---
 
 ## Data Used
