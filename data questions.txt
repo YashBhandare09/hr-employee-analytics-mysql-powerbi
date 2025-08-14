@@ -1,0 +1,396 @@
+	#	Time	Action	Message	Duration / Fetch
+3	1	12:39:15	DROP DATABASE `projects`	1 row(s) affected	0.031 sec
+3	2	12:39:39	CREATE DATABASE projects	1 row(s) affected	0.000 sec
+3	3	12:39:52	SHOW SESSION VARIABLES LIKE 'lower_case_table_names'	OK	0.000 sec
+3	4	12:39:52	SHOW DATABASES	OK	0.000 sec
+3	5	12:39:58	SHOW SESSION VARIABLES LIKE 'lower_case_table_names'	OK	0.000 sec
+3	6	12:39:58	SHOW TABLES FROM `projects` like 'hr'	OK	0.000 sec
+3	7	12:40:01	CREATE TABLE `projects`.`hr` (`ï»¿id` text, `first_name` text, `last_name` text, `birthdate` text, `gender` text, `race` text, `department` text, `jobtitle` text, `location` text, `hire_date` text, `termdate` text, `location_city` text, `location_state` text)	OK	0.000 sec
+3	8	12:40:01	PREPARE stmt FROM 'INSERT INTO `projects`.`hr` (`ï»¿id`,`first_name`,`last_name`,`birthdate`,`gender`,`race`,`department`,`jobtitle`,`location`,`hire_date`,`termdate`,`location_city`,`location_state`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)'	OK	0.000 sec
+3	9	12:42:32	DEALLOCATE PREPARE stmt	OK	0.000 sec
+3	10	12:43:19	USE projects	0 row(s) affected	0.000 sec
+3	11	12:43:19	SELECT * FROM hr
+ LIMIT 0, 1000	1000 row(s) returned	0.016 sec / 0.000 sec
+3	12	12:49:16	ALTER TABLE hr
+ CHANGE COLUMN `ï»¿id` `emp_id` VARCHAR(20) NULL	22214 row(s) affected
+ Records: 22214  Duplicates: 0  Warnings: 0	0.250 sec
+3	13	12:50:28	DESCRIBE hr	13 row(s) returned	0.000 sec / 0.000 sec
+3	14	12:54:47	USE projects	0 row(s) affected	0.000 sec
+3	15	12:54:47	SELECT * FROM hr
+ LIMIT 0, 1000	1000 row(s) returned	0.000 sec / 0.016 sec
+0	16	12:54:47	ALTER TABLE hr
+ CHANGE COLUMN `ï»¿id` `emp_id` VARCHAR(20) NULL	Error Code: 1054. Unknown column 'ï»¿id' in 'hr'	0.000 sec
+3	17	12:56:12	SET sql_safe_updates = 0	0 row(s) affected	0.000 sec
+3	18	12:56:18	UPDATE hr
+ SET birthdate = CASE
+  WHEN birthdate LIKE '%/%' THEN date_format(str_to_date(birthdate, '%m/%d/%Y'), '%Y-%m-%d')
+     WHEN birthdate LIKE '%-%' THEN date_format(str_to_date(birthdate, '%m-%d-%Y'), '%Y-%m-%d')
+     ELSE NULL
+ END	22214 row(s) affected
+ Rows matched: 22214  Changed: 22214  Warnings: 0	0.750 sec
+3	19	12:57:20	ALTER TABLE hr
+ MODIFY COLUMN birthdate DATE	22214 row(s) affected
+ Records: 22214  Duplicates: 0  Warnings: 0	0.297 sec
+3	20	12:57:35	SELECT birthdate from hr
+ LIMIT 0, 1000	1000 row(s) returned	0.016 sec / 0.000 sec
+3	21	12:58:15	SELECT birthdate from hr
+ LIMIT 0, 1000	1000 row(s) returned	0.000 sec / 0.000 sec
+3	22	13:00:01	UPDATE hr
+ SET hire_date = CASE
+  WHEN hire_date LIKE '%/%' THEN date_format(str_to_date(hire_date, '%m/%d/%Y'), '%Y-%m-%d')
+     WHEN hire_date LIKE '%-%' THEN date_format(str_to_date(hire_date, '%m-%d-%Y'), '%Y-%m-%d')
+     ELSE NULL
+ END	22214 row(s) affected
+ Rows matched: 22214  Changed: 22214  Warnings: 0	0.734 sec
+3	23	13:00:42	SELECT hire_date from hr
+ LIMIT 0, 1000	1000 row(s) returned	0.000 sec / 0.000 sec
+3	24	13:03:40	ALTER TABLE hr
+ MODIFY COLUMN hire_date DATE	22214 row(s) affected
+ Records: 22214  Duplicates: 0  Warnings: 0	0.281 sec
+0	25	13:04:02	UPDATE hr
+ SET termdate = date(str_to_date(termdate, '%Y-%m-%d %H:%i:%s UTC'))
+ WHERE termdate IS NOT NULL AND termdate != ' '	Error Code: 1411. Incorrect datetime value: '' for function str_to_date	0.000 sec
+0	26	13:07:30	ALTER TABLE hr
+ MODIFY COLUMN termdate DATE	Error Code: 1292. Incorrect date value: '' for column 'termdate' at row 1	0.031 sec
+0	27	13:07:37	UPDATE hr
+ SET termdate = date(str_to_date(termdate, '%Y-%m-%d %H:%i:%s UTC'))
+ WHERE termdate IS NOT NULL AND termdate != ' '	Error Code: 1411. Incorrect datetime value: '' for function str_to_date	0.000 sec
+3	28	13:09:28	UPDATE hr
+ SET termdate = DATE(STR_TO_DATE(termdate, '%Y-%m-%d %H:%i:%s UTC'))
+ WHERE termdate IS NOT NULL AND termdate != '' AND termdate != ' '	3929 row(s) affected
+ Rows matched: 3929  Changed: 3929  Warnings: 0	0.172 sec
+3	29	13:09:58	SELECT termdate from hr
+ LIMIT 0, 1000	1000 row(s) returned	0.000 sec / 0.000 sec
+0	30	13:10:18	ALTER TABLE hr
+ MODIFY COLUMN termdate DATE	Error Code: 1292. Incorrect date value: '' for column 'termdate' at row 1	0.062 sec
+3	31	13:11:36	UPDATE hr
+ SET termdate = NULL
+ WHERE TRIM(termdate) = ''	18285 row(s) affected
+ Rows matched: 18285  Changed: 18285  Warnings: 0	0.484 sec
+3	32	13:12:16	UPDATE hr
+ SET termdate = DATE(STR_TO_DATE(termdate, '%Y-%m-%d %H:%i:%s UTC'))
+ WHERE termdate IS NOT NULL AND termdate != ''	0 row(s) affected
+ Rows matched: 3929  Changed: 0  Warnings: 0	0.047 sec
+3	33	13:12:22	ALTER TABLE hr
+ MODIFY COLUMN termdate DATE	22214 row(s) affected
+ Records: 22214  Duplicates: 0  Warnings: 0	0.265 sec
+3	34	13:12:42	SELECT termdate from hr
+ LIMIT 0, 1000	1000 row(s) returned	0.015 sec / 0.000 sec
+3	35	13:13:24	DESCRIBE hr	13 row(s) returned	0.016 sec / 0.000 sec
+3	36	13:34:18	ALTER TABLE hr ADD COLUMN age INT	0 row(s) affected
+ Records: 0  Duplicates: 0  Warnings: 0	0.031 sec
+3	37	13:34:24	UPDATE hr
+ SET age = timestampdiff(YEAR, birthdate, CURDATE())	22214 row(s) affected
+ Rows matched: 22214  Changed: 22214  Warnings: 0	1.015 sec
+3	38	13:34:31	SELECT 
+  min(age) AS youngest,
+     max(age) AS oldest
+ FROM hr
+ LIMIT 0, 1000	1 row(s) returned	0.032 sec / 0.000 sec
+3	39	13:34:39	SELECT count(*) FROM hr WHERE age < 18
+ LIMIT 0, 1000	1 row(s) returned	0.031 sec / 0.000 sec
+3	40	14:26:26	SELECT gender,count(*) AS count
+  from hr
+  where age >= 18 and termdate is NULL
+  GROUP BY gender
+ LIMIT 0, 1000	3 row(s) returned	0.141 sec / 0.000 sec
+3	41	14:33:45	SELECT race,count(*) AS count
+   from hr
+   where age >=18 and termdate is NULL 
+   GROUP BY race
+ LIMIT 0, 1000	7 row(s) returned	0.094 sec / 0.000 sec
+3	42	14:34:43	SELECT race,count(*) AS count
+   from hr
+   where age >=18 and termdate is NULL 
+   GROUP BY race
+ LIMIT 0, 1000	7 row(s) returned	0.125 sec / 0.000 sec
+0	43	14:34:43	ORDER BY count(*) DESC	Error Code: 1064. You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER BY count(*) DESC' at line 1	0.000 sec
+3	44	14:35:29	SELECT race,count(*) AS count
+   from hr
+   where age >=18 and termdate is NULL 
+   GROUP BY race 
+   ORDER BY count(*) DESC
+ LIMIT 0, 1000	7 row(s) returned	0.094 sec / 0.000 sec
+3	45	14:47:37	SELECT
+  min(age) AS youngest,
+     max(age) AS older
+ FROM hr
+ WHERE age >=18 and termdate is NULL
+ LIMIT 0, 1000	1 row(s) returned	0.062 sec / 0.000 sec
+0	46	14:48:31	SELECT 
+  CASE 
+     WHEN age >= 18 AND age <=24 THEN '18-24'
+     WHEN age >= 25 AND age <=34 THEN '25-34'
+     WHEN age >= 35 AND age <=44 THEN '35-44'
+     WHEN age >= 45 AND age <=54 THEN '44-54'
+     WHEN age >= 55 AND age <=64 THEN '54-64'
+     ELSE'65+'
+    END AS age_group
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'age' in 'field list'	0.000 sec
+3	47	14:52:45	SELECT
+  min(age) AS youngest,
+     max(age) AS older
+ FROM hr
+ WHERE age >=18 and termdate is NULL
+ LIMIT 0, 1000	1 row(s) returned	0.047 sec / 0.000 sec
+0	48	14:52:45	SELECT 
+  CASE 
+     WHEN age >= 18 AND age <=24 THEN '18-24'
+     WHEN age >= 25 AND age <=34 THEN '25-34'
+     WHEN age >= 35 AND age <=44 THEN '35-44'
+     WHEN age >= 45 AND age <=54 THEN '44-54'
+     WHEN age >= 55 AND age <=64 THEN '54-64'
+     ELSE'65+'
+    END AS age_group
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'age' in 'field list'	0.000 sec
+3	49	14:55:24	SELECT 
+  CASE 
+     WHEN age >= 18 AND age <=24 THEN '18-24'
+     WHEN age >= 25 AND age <=34 THEN '25-34'
+     WHEN age >= 35 AND age <=44 THEN '35-44'
+     WHEN age >= 45 AND age <=54 THEN '44-54'
+     WHEN age >= 55 AND age <=64 THEN '54-64'
+     ELSE'65+'
+    END AS age_group,
+    COUNT(*) AS count
+ FROM hr
+ WHERE age >=18 and termdate is NULL
+ GROUP BY age_group
+ ORDER BY age_group
+ LIMIT 0, 1000	5 row(s) returned	0.109 sec / 0.000 sec
+3	50	15:38:45	SELECT 
+   CASE 
+      WHEN age >= 18 AND age <= 24 THEN '18-24'
+      WHEN age >= 25 AND age <= 34 THEN '25-34'
+      WHEN age >= 35 AND age <= 44 THEN '35-44'
+      WHEN age >= 45 AND age <= 54 THEN '45-54'
+      WHEN age >= 55 AND age <= 64 THEN '55-64'
+      ELSE '65+'
+   END AS age_group,gender,
+   COUNT(*) AS total
+ FROM hr
+ GROUP BY age_group,gender
+ ORDER BY age_group,gender
+ LIMIT 0, 1000	18 row(s) returned	0.156 sec / 0.000 sec
+3	51	15:41:55	SELECT 
+   CASE 
+      WHEN age >= 18 AND age <= 24 THEN '18-24'
+      WHEN age >= 25 AND age <= 34 THEN '25-34'
+      WHEN age >= 35 AND age <= 44 THEN '35-44'
+      WHEN age >= 45 AND age <= 54 THEN '45-54'
+      WHEN age >= 55 AND age <= 64 THEN '55-64'
+      ELSE '65+'
+   END AS age_group,gender,
+   COUNT(*) AS count
+ FROM hr
+ GROUP BY age_group,gender
+ ORDER BY age_group,gender
+ LIMIT 0, 1000	18 row(s) returned	0.141 sec / 0.000 sec
+3	52	15:44:36	SELECT location ,count(*) AS count
+ FROM hr
+ WHERE age >= 18 and termdate is NULL
+ GROUP BY location
+ LIMIT 0, 1000	2 row(s) returned	0.125 sec / 0.000 sec
+0	53	15:56:58	SELECT
+   round(AVG(DATEDIFF(termdate, hiredate)) / 365,0) AS avg_length_employment
+ FROM hr
+ WHERE termdate <= CURDATE() AND termdate is null AND  age >= 18
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'hiredate' in 'field list'	0.016 sec
+0	54	15:57:28	SELECT
+   round(AVG(DATEDIFF(termdate, hiredate)) / 365,0) AS avg_length_employment
+ FROM hr
+ WHERE termdate <= CURDATE() AND  age >= 18 AND termdate is null
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'hiredate' in 'field list'	0.000 sec
+0	55	15:57:44	SELECT
+   round(AVG(DATEDIFF(termdate, hiredate)) / 365,0) AS avg_length_employment
+ FROM hr
+ WHERE termdate <= CURDATE() AND  age >= 18
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'hiredate' in 'field list'	0.000 sec
+3	56	15:59:14	SELECT
+   round(AVG(DATEDIFF(termdate, hire_date)) / 365,0) AS avg_length_employment
+ FROM hr
+ WHERE termdate <= CURDATE() AND termdate is null AND  age >= 18
+ LIMIT 0, 1000	1 row(s) returned	0.047 sec / 0.000 sec
+3	57	15:59:32	SELECT
+   round(AVG(DATEDIFF(termdate, hire_date)) / 365,0) AS avg_length_employment
+ FROM hr
+ WHERE termdate <= CURDATE()  AND  age >= 18
+ LIMIT 0, 1000	1 row(s) returned	0.062 sec / 0.000 sec
+3	58	16:01:15	SELECT department,gender,COUNT(*) AS COUNT
+ FROM hr
+ WHERE age >= 18 AND termdate is not NULL
+ GROUP BY department,gender
+ ORDER BY department
+ LIMIT 0, 1000	37 row(s) returned	0.078 sec / 0.000 sec
+3	59	16:15:51	SELECT jobtitle,count(*) AS count
+ FROM hr
+ WHERE age >= 18 AND termdate is not NULL
+ GROUP BY jobtitle
+ ORDER BY jobtitle DESC
+ LIMIT 0, 1000	172 row(s) returned	0.094 sec / 0.000 sec
+0	60	16:33:06	SELECT 
+     department
+  total_count,
+     terminated_count,
+     terminated_count/total_count AS termonation_rate
+ FROM(
+  SELECT 
+         department,
+         count(*) AS total_count,
+         SUM(CASE
+       WHEN termdate is NULL AND termdate <= curdate() THEN 1 ELSE 0 
+   END) AS terminated_count
+     FROM hr
+     WHERE age >= 18
+     GROUP BY department,
+ ) AS subquery
+ ORDER BY termination_rate DESC	Error Code: 1064. You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AS subquery
+ ORDER BY termination_rate DESC' at line 16	0.000 sec
+3	61	16:35:04	SELECT 
+     department
+  total_count,
+     terminated_count,
+     terminated_count/total_count AS termination_rate
+ FROM(
+  SELECT 
+         department,
+         count(*) AS total_count,
+         SUM(CASE
+       WHEN termdate is  NULL AND termdate <= curdate() THEN 1 ELSE 0 
+   END) AS terminated_count
+     FROM hr
+     WHERE age >= 18
+     GROUP BY department
+ ) AS subquery
+ ORDER BY termination_rate DESC
+ LIMIT 0, 1000	13 row(s) returned	0.125 sec / 0.000 sec
+3	62	16:35:21	SELECT 
+     department
+  total_count,
+     terminated_count,
+     terminated_count/total_count AS termination_rate
+ FROM(
+  SELECT 
+         department,
+         count(*) AS total_count,
+         SUM(CASE
+       WHEN termdate is NOT NULL AND termdate <= curdate() THEN 1 ELSE 0 
+   END) AS terminated_count
+     FROM hr
+     WHERE age >= 18
+     GROUP BY department
+ ) AS subquery
+ ORDER BY termination_rate DESC
+ LIMIT 0, 1000	13 row(s) returned	0.110 sec / 0.000 sec
+3	63	16:37:18	SELECT location_state, COUNT(*) as COUNT
+ FROM hr
+ WHERE age >= 18 AND termdate is NULL
+ GROUP BY location_state
+ ORDER BY count DESC
+ LIMIT 0, 1000	7 row(s) returned	0.079 sec / 0.000 sec
+0	64	16:45:53	SELECT
+   year,
+   hires,
+   terminations,
+   hires - terminations AS net_change,
+   round((hires - terminations)/hires * 100, 2) AS net_change_percent
+ FROM(
+  SELECT 
+   YEAR(hire_date) AS year,
+         count(*) AS hires,
+         SUM(CASE WHEN terminate <> '0000-00-00'  AND termdate <= curdate THEN 1 ELSE 0 END) AS terminations
+   FROM hr
+   WHERE age >= 18 
+   GROUP BY YEAR(hire_date)
+         )AS subquery
+ ORDER BY year ASC
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'terminate' in 'field list'	0.000 sec
+0	65	16:48:17	SELECT
+   year,
+   hires,
+   terminations,
+   hires - terminations AS net_change,
+   round((hires - terminations)/hires * 100, 2) AS net_change_percent
+ FROM(
+  SELECT 
+   YEAR(hire_date) AS year,
+         count(*) AS hires,
+         SUM(CASE WHEN termdate <> '0000-00-00'  AND termdate <= curdate THEN 1 ELSE 0 END) AS terminations
+   FROM hr
+   WHERE age >= 18 
+   GROUP BY YEAR(hire_date)
+         )AS subquery
+ ORDER BY year ASC
+ LIMIT 0, 1000	Error Code: 1525. Incorrect DATE value: '0000-00-00'	0.000 sec
+0	66	16:49:34	SELECT
+   year,
+   hires,
+   terminations,
+   hires - terminations AS net_change,
+   ROUND((hires - terminations) / hires * 100, 2) AS net_change_percent
+ FROM (
+   SELECT 
+     YEAR(hiredate) AS year,
+     COUNT(*) AS hires,
+     SUM(CASE 
+           WHEN termdate IS NOT NULL AND termdate <= CURDATE() 
+           THEN 1 ELSE 0 
+         END) AS terminations
+   FROM hr
+   WHERE age >= 18 
+   GROUP BY YEAR(hiredate)
+ ) AS subquery
+ ORDER BY year ASC
+ LIMIT 0, 1000	Error Code: 1054. Unknown column 'hiredate' in 'field list'	0.000 sec
+0	67	16:50:20	SELECT
+     year,
+     hires,
+     terminations,
+     hires - terminations AS net_change,
+     ROUND((hires - terminations) / hires * 100, 2) AS net_change_percent
+ FROM (
+     SELECT 
+         YEAR(hire_date) AS year,
+         COUNT(*) AS hires,
+         SUM(CASE 
+             WHEN termdate IS NOT NULL AND termdate != '' AND termdate <= CURDATE() THEN 1 
+             ELSE 0 
+         END) AS terminations
+     FROM hr
+     WHERE age >= 18
+     GROUP BY YEAR(hire_date)
+ ) AS subquery
+ ORDER BY year ASC
+ LIMIT 0, 1000	Error Code: 1525. Incorrect DATE value: ''	0.000 sec
+3	68	16:51:30	SELECT
+     year,
+     hires,
+     terminations,
+     hires - terminations AS net_change,
+     ROUND((hires - terminations) / hires * 100, 2) AS net_change_percent
+ FROM (
+     SELECT 
+         YEAR(hire_date) AS year,
+         COUNT(*) AS hires,
+         SUM(CASE 
+             WHEN termdate IS NOT NULL AND termdate <= CURDATE() THEN 1 
+             ELSE 0 
+         END) AS terminations
+     FROM hr
+     WHERE age >= 18
+     GROUP BY YEAR(hire_date)
+ ) AS subquery
+ ORDER BY year ASC
+ LIMIT 0, 1000	21 row(s) returned	0.078 sec / 0.000 sec
+3	69	16:54:01	SELECT department,round(avg(datediff(termdate,hire_date)/365),0) AS avg_tenure
+ FROM hr
+ WHERE termdate <= curdate() AND termdate is NULL AND age >= 18
+ GROUP BY department
+ LIMIT 0, 1000	0 row(s) returned	0.063 sec / 0.000 sec
+3	70	16:54:01	SELECT 
+   department,
+   ROUND(AVG(DATEDIFF(termdate, hire_date) / 365), 0) AS avg_tenure
+ FROM hr
+ WHERE termdate IS NOT NULL AND termdate <= CURDATE() AND age >= 18
+ GROUP BY department
+ LIMIT 0, 1000	13 row(s) returned	0.062 sec / 0.000 sec
